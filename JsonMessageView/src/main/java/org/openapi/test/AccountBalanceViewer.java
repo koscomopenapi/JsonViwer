@@ -8,6 +8,7 @@ import org.openapi.common.CommonHeader;
 import org.openapi.transaction.QueryResult;
 
 import java.lang.reflect.Type;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 /**
@@ -51,18 +52,18 @@ public class AccountBalanceViewer {
             if (je1.getAsJsonObject().get("summary") != null) {
                 BalanceSummary balanceSummary = gson.fromJson(je1.getAsJsonObject().get("summary"), BalanceSummary.class);
                 System.out.println("-------------------------------------");
-                System.out.println("계좌내현금 - "+balanceSummary.getCashBalance());
-                System.out.println("d+1현금 - "+balanceSummary.getD1());
-                System.out.println("d+2현금 - "+balanceSummary.getD2());
-                System.out.println("대용금 - "+balanceSummary.getSubstiture());
-                System.out.println("미수/미납금 - "+balanceSummary.getReceivable());
-                System.out.println("대용증거금 - "+balanceSummary.getSubsMargin());
-                System.out.println("대출/신용금 - "+balanceSummary.getLoanCredit());
-                System.out.println("유가증권매수금액 -"+balanceSummary.getValAtTrade());
-                System.out.println("유가증권평가금액 - "+balanceSummary.getValueAtCur());
-                System.out.println("유가증권평가손익 - "+balanceSummary.getProLoss());
-                System.out.println("총평가금액 - "+balanceSummary.getTotalAccVal());
-                System.out.println("출금가능액 - "+balanceSummary.getCashAvWithdraw());
+                System.out.println("계좌내현금 - ["+new BigDecimal(balanceSummary.getCashBalance())+"]");
+                System.out.println("d+1현금 - ["+new BigDecimal(balanceSummary.getD1())+"]");
+                System.out.println("d+2현금 - ["+new BigDecimal(balanceSummary.getD2())+"]");
+                System.out.println("대용금 - ["+new BigDecimal(balanceSummary.getSubstiture())+"]");
+                System.out.println("미수/미납금 - ["+new BigDecimal(balanceSummary.getReceivable())+"]");
+                System.out.println("대용증거금 - ["+new BigDecimal(balanceSummary.getSubsMargin())+"]");
+                System.out.println("대출/신용금 - ["+new BigDecimal(balanceSummary.getLoanCredit())+"]");
+                System.out.println("유가증권매수금액 - ["+new BigDecimal(balanceSummary.getValAtTrade())+"]");
+                System.out.println("유가증권평가금액 - ["+new BigDecimal(balanceSummary.getValueAtCur())+"]");
+                System.out.println("유가증권평가손익 - ["+new BigDecimal(balanceSummary.getProLoss())+"]");
+                System.out.println("총평가금액 - ["+new BigDecimal(balanceSummary.getTotalAccVal())+"]");
+                System.out.println("출금가능액 - ["+new BigDecimal(balanceSummary.getCashAvWithdraw())+"]");
 
             } else if (je1.getAsJsonObject().get("equityList") !=null) {
                 Type listType = new TypeToken<ArrayList<EquityBalance>>(){}.getType();
@@ -77,9 +78,9 @@ public class AccountBalanceViewer {
                     System.out.println("종목코드 - [" + equityBalance.getIsinCode()+"]");
                     System.out.println("보유수량 - [" + equityBalance.getQty()+"]");
                     System.out.println("거래유형 - ["+ equityBalance.getTradeType()+"]");
-                    System.out.println("매수금액 - ["+ equityBalance.getValAtTrade()+"]");
-                    System.out.println("평가금액 - ["+ equityBalance.getValAtCur()+"]");
-                    System.out.println("평가손익 - ["+ equityBalance.getProLoss()+"]");
+                    System.out.println("매수금액 - ["+ new BigDecimal(equityBalance.getValAtTrade())+"]");
+                    System.out.println("평가금액 - ["+ new BigDecimal(equityBalance.getValAtCur())+"]");
+                    System.out.println("평가손익 - ["+ new BigDecimal(equityBalance.getProLoss())+"]");
                     System.out.println("수익률 - [" + equityBalance.getEarningRate()+"%]");
                 }
             } else if (je1.getAsJsonObject().get("fundList") !=null) {
@@ -93,13 +94,13 @@ public class AccountBalanceViewer {
                     System.out.println("-------------------------------------");
                     System.out.println("펀드코드 - [" + fundBalance.getFundCode() +"]");
                     System.out.println("펀드이름 - [" + fundBalance.getFundName()+"]");
-                    System.out.println("매수금액 - ["+ fundBalance.getValAtTrade()+"]");
-                    System.out.println("평가금액 - ["+ fundBalance.getValAtCur()+"]");
-                    System.out.println("평가손익 - ["+ fundBalance.getProLoss()+"]");
+                    System.out.println("매수금액 - ["+ new BigDecimal(fundBalance.getValAtTrade())+"]");
+                    System.out.println("평가금액 - ["+ new BigDecimal(fundBalance.getValAtCur())+"]");
+                    System.out.println("평가손익 - ["+ new BigDecimal(fundBalance.getProLoss())+"]");
                     System.out.println("최초매수일 - ["+ fundBalance.getFirstDateBuy()+"]");
                     System.out.println("최종매수일 - ["+ fundBalance.getLastDateBuy()+"]");
                     System.out.println("만기일 - [" + fundBalance.getMaturity()+"]");
-                    System.out.println("수익률 - [" + fundBalance.getEarningRate()+"]");
+                    System.out.println("수익률 - [" + fundBalance.getEarningRate()+"%]");
                 }
             } else if (je1.getAsJsonObject().get("etcList") !=null) {
                 Type listType = new TypeToken<ArrayList<EtcBalance>>(){}.getType();
@@ -112,11 +113,11 @@ public class AccountBalanceViewer {
                     System.out.println("-------------------------------------");
                     System.out.println("상품구분 - [" + etcBalance.getAssetType() +"]");
                     System.out.println("상품이름 - [" + etcBalance.getAssetName()+"]");
-                    System.out.println("보유수량 - [" + etcBalance.getQty()+"]");
+                    System.out.println("보유수량 - [" + new BigDecimal(etcBalance.getQty())+"]");
                     System.out.println("거래유형 - ["+ etcBalance.getTradeType()+"]");
-                    System.out.println("매수금액 - ["+ etcBalance.getValAtTrade()+"]");
-                    System.out.println("평가금액 - ["+ etcBalance.getValAtCur()+"]");
-                    System.out.println("수익률 - [" + etcBalance.getEarningRate()+"]");
+                    System.out.println("매수금액 - ["+ new BigDecimal(etcBalance.getValAtTrade())+"]");
+                    System.out.println("평가금액 - ["+ new BigDecimal(etcBalance.getValAtCur())+"]");
+                    System.out.println("수익률 - [" + etcBalance.getEarningRate()+"%]");
                 }
             }
         }
